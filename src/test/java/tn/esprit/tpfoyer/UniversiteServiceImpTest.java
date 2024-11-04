@@ -51,7 +51,6 @@ class UniversiteServiceImpTest {
         };
     }
 
-
     @Test
     public void testUniversiteServiceOperations() {
         // Mocking behavior for findAll
@@ -70,12 +69,15 @@ class UniversiteServiceImpTest {
         when(universiteRepository.save(any(Universite.class))).thenReturn(universite);
         Universite addedUniversite = universiteService.addUniversite(universite);
         Assertions.assertNotNull(addedUniversite);
-        verify(universiteRepository, times(1)).save(universite);
+        verify(universiteRepository, times(1)).save(universite); // Verify save for add
+
+        // Reset mock interactions before modifying
+        reset(universiteRepository);
 
         // Mocking behavior for modify (save)
         Universite modifiedUniversite = universiteService.modifyUniversite(universite);
         Assertions.assertNotNull(modifiedUniversite);
-        verify(universiteRepository, times(1)).save(universite);
+        verify(universiteRepository, times(1)).save(universite); // Verify save for modify
 
         // Mocking behavior for delete
         doNothing().when(universiteRepository).deleteById(1L);
