@@ -21,7 +21,7 @@ import tn.esprit.tpfoyer.repository.UniversiteRepository;
 import tn.esprit.tpfoyer.service.UniversiteServiceImpl;
 
 @ExtendWith(MockitoExtension.class)
-class TpFoyerApplicationTests {
+class UniversiteServiceImpTest {
 
     @Mock
     private UniversiteRepository universiteRepository; // Mock the repository
