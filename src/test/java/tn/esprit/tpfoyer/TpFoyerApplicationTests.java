@@ -32,17 +32,25 @@ class UniversiteServiceImpTest {
     void setUp() {
         // Initialize the object to be tested
         universite = new Universite();
-        universite.setId(1L);
-        universite.setNom("Test University");
+        universite.setIdUniversite(1L); // Updated to use the correct setter
+        universite.setNomUniversite("Test University"); // Updated to use the correct setter
 
         // Initialize the list of universites
         listUniversites = new ArrayList<>() {
             {
-                add(new Universite(2L, "University 2"));
-                add(new Universite(3L, "University 3"));
+                Universite university2 = new Universite();
+                university2.setIdUniversite(2L);
+                university2.setNomUniversite("University 2");
+                add(university2);
+
+                Universite university3 = new Universite();
+                university3.setIdUniversite(3L);
+                university3.setNomUniversite("University 3");
+                add(university3);
             }
         };
     }
+
 
     @Test
     public void testUniversiteServiceOperations() {
