@@ -32,8 +32,8 @@ class UniversiteServiceImpTest {
     void setUp() {
         // Initialize the object to be tested
         universite = new Universite();
-        universite.setIdUniversite(1L); // Updated to use the correct setter
-        universite.setNomUniversite("Test University"); // Updated to use the correct setter
+        universite.setIdUniversite(1L);
+        universite.setNomUniversite("Test University");
 
         // Initialize the list of universites
         listUniversites = new ArrayList<>() {
@@ -52,34 +52,41 @@ class UniversiteServiceImpTest {
     }
 
     @Test
-    public void testUniversiteServiceOperations() {
-        // Mocking behavior for findAll
+    public void testRetrieveAllUniversites() {
         when(universiteRepository.findAll()).thenReturn(listUniversites);
         List<Universite> retrievedUniversites = universiteService.retrieveAllUniversites();
         Assertions.assertEquals(listUniversites, retrievedUniversites);
         verify(universiteRepository, times(1)).findAll();
+    }
 
-        // Mocking behavior for findById
+    @Test
+    public void testRetrieveUniversite() {
         when(universiteRepository.findById(1L)).thenReturn(Optional.of(universite));
         Universite retrievedUniversite = universiteService.retrieveUniversite(1L);
         Assertions.assertEquals(universite, retrievedUniversite);
         verify(universiteRepository, times(1)).findById(1L);
+    }
 
-        // Mocking behavior for save (add)
+    @Test
+    public void testAddUniversite() {
         when(universiteRepository.save(any(Universite.class))).thenReturn(universite);
         Universite addedUniversite = universiteService.addUniversite(universite);
         Assertions.assertNotNull(addedUniversite);
-        verify(universiteRepository, times(1)).save(universite); // Verify save for add
+        Assertions.assertEquals("Test University", addedUniversite.getNomUniversite());
+        verify(universiteRepository, times(1)).save(universite);
+    }
 
-        // Reset mock interactions before modifying
-        reset(universiteRepository);
-
-        // Mocking behavior for modify (save)
+    @Test
+    public void testModifyUniversite() {
+        when(universiteRepository.save(any(Universite.class))).thenReturn(universite);
         Universite modifiedUniversite = universiteService.modifyUniversite(universite);
         Assertions.assertNotNull(modifiedUniversite);
-        verify(universiteRepository, times(1)).save(universite); // Verify save for modify
+        Assertions.assertEquals("Test University", modifiedUniversite.getNomUniversite());
+        verify(universiteRepository, times(1)).save(universite);
+    }
 
-        // Mocking behavior for delete
+    @Test
+    public void testRemoveUniversite() {
         doNothing().when(universiteRepository).deleteById(1L);
         universiteService.removeUniversite(1L);
         verify(universiteRepository, times(1)).deleteById(1L);
